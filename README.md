@@ -39,4 +39,12 @@ git clone https://github.com/BusterWarn/config_files $env:LOCALAPPDATA\nvim
 # Remove git folder
 Remove-Item $env:LOCALAPPDATA\nvim\.git -Recurse -Force
 ```
+### nvim-treesitter problems:
 
+Sometimes `nvim-treesitter` tries to compile with some old gcc version with `C99`. A simple solution is to start neovim with path to your gcc compiler:
+
+```shell
+CC=/path/to/bin/gcc nvim
+```
+
+For more info: https://github.com/nvim-treesitter/nvim-treesitter/issues/2383
