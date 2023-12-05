@@ -14,13 +14,15 @@ return {
     "catppuccin/nvim",
     lazy = true,
     name = "catppuccin",
-    flavour = "latte", -- latte, frappe, macchiato, mocha
+    opts = {
+      flavour = "mocha", -- latte, frappe, macchiato, mocha
+    },
   },
 
   {
     "LazyVim/LazyVim",
     opts = {
-      -- colorscheme = "catppuccin",
+      colorscheme = "tokyonight",
     },
   },
 }
