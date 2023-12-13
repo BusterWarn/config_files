@@ -9,14 +9,16 @@ return {
         ["<C-d>"] = false,
       },
     },
-    -- If ripgrep is not available!
-    vimgrep_arguments = {
-      --   "ag",
-      --   "--nocolor",
-      --   "--nogroup",
-      --   "--column",
-      --   "--line-numbers",
-      --   "--smart-case",
+    defaults = {
+      -- If ripgrep is not available!
+      vimgrep_arguments = {
+        -- "ag",
+        -- "--nocolor",
+        -- "--nogroup",
+        -- "--column",
+        -- "--line-numbers",
+        -- "--smart-case",
+      },
     },
   },
 }
