@@ -38,3 +38,19 @@ vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume, { desc = 
 --   ["<leader>s"] = { name = "[S]earch", _ = "which_key_ignore" },
 --   ["<leader>w"] = { name = "[W]orkspace", _ = "which_key_ignore" },
 -- })
+
+function ToggleLogSyntax()
+  -- Get the current syntax
+  local current_syntax = vim.api.nvim_buf_get_option(0, 'syntax')
+
+  if current_syntax ~= 'log' then
+    -- Store the current syntax and set to 'log'
+    previous_syntax = current_syntax
+    vim.api.nvim_buf_set_option(0, 'syntax', 'log')
+  else
+    -- Restore the previous syntax
+    vim.api.nvim_buf_set_option(0, 'syntax', previous_syntax or '')
+  end
+end
+
+vim.keymap.set("n", "<F4>", ":lua ToggleLogSyntax()<CR>", { desc = "Toggle Log Syntax Highlighting" })
