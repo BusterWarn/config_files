@@ -48,6 +48,7 @@ function ToggleLogSyntax()
     -- Store the current syntax and set to 'log'
     previous_syntax = current_syntax
     vim.api.nvim_buf_set_option(0, 'syntax', 'log')
+    vim.cmd("source ~/.config/nvim/vim/.vim/syntax/log.vim")
   else
     -- Restore the previous syntax
     vim.api.nvim_buf_set_option(0, 'syntax', previous_syntax or '')

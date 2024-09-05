@@ -39,7 +39,7 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 
-map <F4> :set syntax=mylog <CR>
+map <F4> :set syntax=log <CR>
 
 "CODING STUFF
 " For C-like programming, have automatic indentation

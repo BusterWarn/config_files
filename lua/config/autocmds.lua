@@ -41,3 +41,47 @@ local function live_grep_git_root()
   end
 end
 vim.api.nvim_create_user_command("LiveGrepGitRoot", live_grep_git_root, {})
+
+-- Create an augroup for our autocmds
+local log_syntax_group = vim.api.nvim_create_augroup("LogSyntax", { clear = true })
+
+-- Function to check if a file is a log file
+local function is_log_file(bufnr)
+  bufnr = bufnr or 0
+  local file_name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
+  local extension = vim.fn.fnamemodify(file_name, ":e")
+  return extension == "log" or file_name:match("_log$")
+end
+
+-- Function to set filetype to log
+local function set_log_filetype(bufnr)
+  bufnr = bufnr or 0
+  if is_log_file(bufnr) and vim.bo[bufnr].filetype ~= "log" then
+    vim.bo[bufnr].filetype = "log"
+    print("Filetype set to log for buffer: " .. vim.api.nvim_buf_get_name(bufnr))
+    vim.cmd("source ~/.config/nvim/vim/.vim/syntax/log.vim")
+  end
+end
+
+-- Create autocmds for .log and *_log files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "BufEnter" }, {
+  group = log_syntax_group,
+  pattern = { "*.log", "*_log" },
+  callback = function(ev)
+    vim.schedule(function()
+      set_log_filetype(ev.buf)
+    end)
+  end
+})
+
+-- Fallback autocmd to catch any missed log files
+vim.api.nvim_create_autocmd("FileType", {
+  group = log_syntax_group,
+  pattern = "*",
+  callback = function(ev)
+    if is_log_file(ev.buf) and vim.bo[ev.buf].filetype ~= "log" then
+      print("Correcting filetype for log file: " .. vim.api.nvim_buf_get_name(ev.buf))
+      set_log_filetype(ev.buf)
+    end
+  end
+})
